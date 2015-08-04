@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/rafaelrinaldi/idle.js#readme",
   "dependencies": {
-    "object-assign": "^3.0.0"
+    "object-assign": "^3.0.0",
+    "write.js": "^1.0.2"
   }
 }
