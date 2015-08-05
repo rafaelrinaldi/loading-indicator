@@ -47,10 +47,7 @@ Idle.prototype.stop = function() {
 // Helper functions
 
 function render(idle) {
-  var output = compose(
-    generateOutput
-  )(idle);
-
+  var output = generateOutput(idle);
   var next = nextStep(idle);
 
   compose(
@@ -59,11 +56,6 @@ function render(idle) {
   )(next);
 
   return next;
-}
-
-function tapLog(input) {
-  console.log(input);
-  return input;
 }
 
 function generateOutput(idle) {
@@ -82,8 +74,6 @@ function nextStep(idle) {
   var atEnd = idle._index === sequenceMax;
   var atStart = idle._index === 0;
   var next;
-
-  // console.log(sequenceMax, atEnd, atStart, idle._index);
 
   if (atEnd) {
     next = objectAssign({}, idle, {
