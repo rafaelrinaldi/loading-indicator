@@ -14,29 +14,26 @@ function Idle(options) {
   this.options = options;
   this.sequence = sequence;
 
-  this.interval = undefined;
+  this._interval = undefined;
 
   this._index = 0;
   this._isMoonwalking = false;
-
-  return this;
 }
 
-// Prototype methods simply run helpers and save their returned "Idle" at
-// the instance. So we can write just a couple stateful functions
+// Prototype methods simply manage our pure and stateless helpers
 
 Idle.prototype.start = function() {
   this.stop();
 
   this._interval = setInterval(function() {
-     objectAssign(this, render(this));
+    // render state and update "this" to the next state
+    objectAssign(this, render(this));
   }.bind(this), this.options.delay);
 };
 
 Idle.prototype.stop = function() {
   clearInterval(this._interval);
-
-  return objectAssign(this, {
+  objectAssign(this, {
     _interval: undefined,
     _index: 0,
     _isMoonwalking: false,
@@ -45,10 +42,9 @@ Idle.prototype.stop = function() {
 
 // Helper functions
 
+// render current idle and return the next idle
 function render(idle) {
-  var output = generateOutput(idle);
   var next = nextStep(idle);
-
   compose(
     write,
     generateOutput
@@ -57,6 +53,7 @@ function render(idle) {
   return next;
 }
 
+// generate string output based on the current idle
 function generateOutput(idle) {
   var index = idle._isMoonwalking ?
       // invert index when moonwalking
@@ -68,24 +65,22 @@ function generateOutput(idle) {
   return idle.options.prefix + idle.sequence[index] + idle.options.suffix;
 }
 
+// returns the next step
 function nextStep(idle) {
-  var sequenceMax = idle.sequence.length - 1;
-  var atEnd = idle._index === sequenceMax;
+  var max = idle.sequence.length - 1;
+  var atEnd = idle._index === max;
   var atStart = idle._index === 0;
-  var next;
+  var next = {};
 
   if (atEnd) {
-    next = objectAssign({}, idle, {
-      _index: 0,
-      _isMoonwalking: idle.options.moonwalk && !idle._isMoonwalking
-    });
+    // when at and we need to restart the animation
+    next._index = 0;
+    next._isMoonwalking = idle.options.moonwalk && !idle._isMoonwalking;
   } else {
-    next = objectAssign({}, idle, {
-      _index: idle._index + 1
-    });
+    next._index = idle._index + 1;
   }
 
-  return next;
+  return objectAssign({}, idle, next);
 }
 
 module.exports = Idle;
