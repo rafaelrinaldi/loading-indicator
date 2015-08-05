@@ -26,11 +26,10 @@ function Idle(options) {
 // the instance. So we can write just a couple stateful functions
 
 Idle.prototype.start = function() {
-  var step = this;
   this.stop();
 
   this._interval = setInterval(function() {
-    step = render(step);
+     objectAssign(this, render(this));
   }.bind(this), this.options.delay);
 };
 
