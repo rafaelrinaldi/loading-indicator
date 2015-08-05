@@ -5,17 +5,12 @@ var presets = require('./presets');
 var defaults = require('./defaults');
 
 function Idle(options) {
-  var options = objectAssign(defaults, options || {});
-  var sequence = options.sequence || presets[options.preset];
-
-  this.options = options;
-  this.sequence = sequence;
+  this.options = objectAssign(defaults, options || {});;
+  this.sequence = options.sequence || presets[options.preset];
   this._interval = undefined;
   this._index = 0;
   this._isMoonwalking = false;
 }
-
-// Prototype methods simply manage our pure and stateless helpers
 
 Idle.prototype.start = function() {
   this.stop();
@@ -33,8 +28,6 @@ Idle.prototype.stop = function() {
     _isMoonwalking: false,
   });
 };
-
-// Helper functions
 
 // render current idle and return the next idle
 function render(idle) {
