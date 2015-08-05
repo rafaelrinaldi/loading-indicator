@@ -3,7 +3,6 @@ var objectAssign = require('object-assign');
 var write = require('write.js');
 var presets = require('./presets');
 var defaults = require('./defaults');
-var compose = require('./compose');
 
 function Idle(options) {
   var options = objectAssign(defaults, options || {});
@@ -40,11 +39,7 @@ Idle.prototype.stop = function() {
 // render current idle and return the next idle
 function render(idle) {
   var next = nextStep(idle);
-  compose(
-    write,
-    generateOutput
-  )(next);
-
+  write(generateOutput(next));
   return next;
 }
 
