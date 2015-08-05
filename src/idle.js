@@ -1,69 +1,69 @@
 'use strict';
-
 var objectAssign = require('object-assign');
 var write = require('write.js');
 var presets = require('./presets');
 var defaults = require('./defaults');
 
 function Idle(options) {
-  this.options = objectAssign(defaults, options || {});
-  this.sequence = this.options.sequence || presets[this.options.preset];
+  this.options = objectAssign(defaults, options || {});;
+  this.sequence = options.sequence || presets[options.preset];
+  this._interval = undefined;
+  this._index = 0;
+  this._isMoonwalking = false;
 }
 
 Idle.prototype.start = function() {
   this.stop();
-  this.interval = setInterval(this.render.bind(this), this.options.delay);
+  this._interval = setInterval(function() {
+    // render state and update "this" to the next state
+    objectAssign(this, render(this));
+  }.bind(this), this.options.delay);
 };
 
 Idle.prototype.stop = function() {
-  this.index = 0;
-  this.isMoonwalking = false;
-
-  clearInterval(this.interval);
+  clearInterval(this._interval);
+  objectAssign(this, {
+    _interval: undefined,
+    _index: 0,
+    _isMoonwalking: false,
+  });
 };
 
-Idle.prototype.render = function() {
-  var output = this.options.prefix + this.sequence[this.index] + this.options.suffix;
+// render current idle and return the next idle
+function render(idle) {
+  var next = nextStep(idle);
+  write(generateOutput(next));
+  return next;
+}
 
-  write(output);
+// generate string output based on the current idle
+function generateOutput(idle) {
+  var index = idle._isMoonwalking ?
+      // invert index when moonwalking
+      (idle.sequence.length - 1) - idle._index
 
-  this._updateIndex();
-};
+      // normally walk
+    : idle._index;
 
-Idle.prototype._updateIndex = function() {
-  var hasFinishedSequence = this.index === this.sequence.length - 1;
-  var hasStartedSequence = this.index === 0;
-  var shouldMoonwalk = this.options.moonwalk;
+  return idle.options.prefix + idle.sequence[index] + idle.options.suffix;
+}
 
-  if(shouldMoonwalk) {
-    if(hasFinishedSequence) {
-      this.isMoonwalking = true;
-    } else if(hasStartedSequence) {
-      this.isMoonwalking = false;
-    }
+// returns the next step
+function nextStep(idle) {
+  var max = idle.sequence.length - 1;
+  var atEnd = idle._index === max;
+  var atStart = idle._index === 0;
+  var next = {};
 
-    if(this.isMoonwalking) {
-      this._previous();
-    } else {
-      this._next();
-    }
+  if (atEnd) {
+    // when at and we need to restart the animation
+    next._index = 0;
+    next._isMoonwalking = idle.options.moonwalk && !idle._isMoonwalking;
   } else {
-    this._next();
+    next._index = idle._index + 1;
   }
-};
 
-Idle.prototype._previous = function() {
-  if(this.index > 0) {
-    this.index--;
-  }
-};
-
-Idle.prototype._next = function() {
-  if(this.index < this.sequence.length - 1) {
-    this.index++;
-  } else {
-    this.index = 0;
-  }
-};
+  return objectAssign({}, idle, next);
+}
 
 module.exports = Idle;
