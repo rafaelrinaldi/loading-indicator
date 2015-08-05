@@ -1,69 +1,102 @@
 'use strict';
-
 var objectAssign = require('object-assign');
 var write = require('write.js');
 var presets = require('./presets');
 var defaults = require('./defaults');
+var compose = require('./compose');
+
+// Idle
 
 function Idle(options) {
-  this.options = objectAssign(defaults, options || {});
-  this.sequence = this.options.sequence || presets[this.options.preset];
+  var options = objectAssign(defaults, options || {});
+  var sequence = options.sequence || presets[options.preset];
+
+  this.options = options;
+  this.sequence = sequence;
+
+  this.interval = undefined;
+
+  this._index = 0;
+  this._isMoonwalking = false;
+
+  return this;
 }
 
+// Prototype methods simply run helpers and save their returned "Idle" at
+// the instance. So we can write just a couple stateful functions
+
 Idle.prototype.start = function() {
+  var step = this;
   this.stop();
-  this.interval = setInterval(this.render.bind(this), this.options.delay);
+
+  this._interval = setInterval(function() {
+    step = render(step);
+  }.bind(this), this.options.delay);
 };
 
 Idle.prototype.stop = function() {
-  this.index = 0;
-  this.isMoonwalking = false;
+  clearInterval(this._interval);
 
-  clearInterval(this.interval);
+  return objectAssign(this, {
+    _interval: undefined,
+    _index: 0,
+    _isMoonwalking: false,
+  });
 };
 
-Idle.prototype.render = function() {
-  var output = this.options.prefix + this.sequence[this.index] + this.options.suffix;
+// Helper functions
 
-  write(output);
+function render(idle) {
+  var output = compose(
+    generateOutput
+  )(idle);
 
-  this._updateIndex();
-};
+  var next = nextStep(idle);
 
-Idle.prototype._updateIndex = function() {
-  var hasFinishedSequence = this.index === this.sequence.length - 1;
-  var hasStartedSequence = this.index === 0;
-  var shouldMoonwalk = this.options.moonwalk;
+  compose(
+    write,
+    generateOutput
+  )(next);
 
-  if(shouldMoonwalk) {
-    if(hasFinishedSequence) {
-      this.isMoonwalking = true;
-    } else if(hasStartedSequence) {
-      this.isMoonwalking = false;
-    }
+  return next;
+}
 
-    if(this.isMoonwalking) {
-      this._previous();
-    } else {
-      this._next();
-    }
+function tapLog(input) {
+  console.log(input);
+  return input;
+}
+
+function generateOutput(idle) {
+  var index = idle._isMoonwalking ?
+      // invert index when moonwalking
+      (idle.sequence.length - 1) - idle._index
+
+      // normally walk
+    : idle._index
+
+  return idle.options.prefix + idle.sequence[index] + idle.options.suffix;
+}
+
+function nextStep(idle) {
+  var sequenceMax = idle.sequence.length - 1;
+  var atEnd = idle._index === sequenceMax;
+  var atStart = idle._index === 0;
+  var next;
+
+  // console.log(sequenceMax, atEnd, atStart, idle._index);
+
+  if (atEnd) {
+    next = objectAssign({}, idle, {
+      _index: 0,
+      _isMoonwalking: idle.options.moonwalk && !idle._isMoonwalking
+    });
   } else {
-    this._next();
+    next = objectAssign({}, idle, {
+      _index: idle._index + 1
+    });
   }
-};
 
-Idle.prototype._previous = function() {
-  if(this.index > 0) {
-    this.index--;
-  }
-};
-
-Idle.prototype._next = function() {
-  if(this.index < this.sequence.length - 1) {
-    this.index++;
-  } else {
-    this.index = 0;
-  }
-};
+  return next;
+}
 
 module.exports = Idle;
