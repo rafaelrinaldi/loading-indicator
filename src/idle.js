@@ -5,17 +5,13 @@ var presets = require('./presets');
 var defaults = require('./defaults');
 var compose = require('./compose');
 
-// Idle
-
 function Idle(options) {
   var options = objectAssign(defaults, options || {});
   var sequence = options.sequence || presets[options.preset];
 
   this.options = options;
   this.sequence = sequence;
-
   this._interval = undefined;
-
   this._index = 0;
   this._isMoonwalking = false;
 }
@@ -24,7 +20,6 @@ function Idle(options) {
 
 Idle.prototype.start = function() {
   this.stop();
-
   this._interval = setInterval(function() {
     // render state and update "this" to the next state
     objectAssign(this, render(this));
@@ -60,7 +55,7 @@ function generateOutput(idle) {
       (idle.sequence.length - 1) - idle._index
 
       // normally walk
-    : idle._index
+    : idle._index;
 
   return idle.options.prefix + idle.sequence[index] + idle.options.suffix;
 }
