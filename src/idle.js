@@ -13,7 +13,6 @@ function Idle(options) {
 Idle.prototype.start = function() {
   this.stop();
   this.interval = setInterval(this.render.bind(this), this.options.delay);
-  this.render();
 };
 
 Idle.prototype.stop = function() {
