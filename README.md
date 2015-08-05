@@ -26,7 +26,6 @@ The visual preset you want.
 Available values are:
 
 * `sticks`
-* `square`
 * `circle`
 * `dots`
 * `bullets`
@@ -58,6 +57,14 @@ Type: `string`
 Default: empty string  
 
 String to be added to the end of the output.
+
+##### `moonwalk`
+
+Type: `boolean`  
+Default: `false`  
+
+Whether or not to moonwalk when the last step of the animation is reached.  
+This is specially useful for creating smooth animation loops.
 
 #### `idle.start()`
 
