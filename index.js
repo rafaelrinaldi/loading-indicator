@@ -1,3 +1,3 @@
 'use strict';
 
-module.exports = require('./src/idle');
+module.exports = require('./src/loading-indicator');
