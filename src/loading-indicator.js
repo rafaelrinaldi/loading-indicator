@@ -1,23 +1,25 @@
 'use strict';
 
 var objectAssign = require('object-assign');
-var output = require('./output');
+var output = require('log-output');
 var presets = require('./presets');
 var defaults = require('./defaults');
 
 function LoadingIndicator(options) {
   this.options = objectAssign(defaults, options || {});
   this.sequence = this.options.sequence || presets[this.options.preset];
+  this.index = 0;
 }
 
 LoadingIndicator.prototype.start = function() {
-  this.stop();
   this.interval = setInterval(this.render.bind(this), this.options.delay);
 };
 
 LoadingIndicator.prototype.stop = function() {
   this.index = 0;
   this.isMoonwalking = false;
+
+  output.done();
 
   clearInterval(this.interval);
 };
