@@ -1,4 +1,11 @@
-var Idle = require('./');
-var idle = new Idle({delay: 500, preset: 'dots', moonwalk: true});
+'use strict';
 
-idle.start();
+var LoadingIndicator = require('./');
+var spin = new LoadingIndicator();
+
+spin.start();
+
+setTimeout(function() {
+  spin.stop();
+  process.exit();
+}, 3500);
