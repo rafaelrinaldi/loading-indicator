@@ -1,22 +1,26 @@
-# idle.js
+# loading-indicator
 
-> Simple and customizable command line idle status indicator.
+> Simple and customizable command line loading indicator.
 
 ## Install
 
 ```sh
-$ npm install --save idle.js
+$ npm install loading-indicator --save
 ```
 
 ## Usage
 
-### API
+## API
 
-#### `Idle([options])`
+### `new LoadingIndicator([options])`
 
-##### `options`
+### `options`
 
-##### `preset`
+Type: `object`  
+
+Available options.
+
+#### `options.preset`
 
 Type: `string`  
 Default: `sticks`  
@@ -31,34 +35,34 @@ Available values are:
 * `bullets`
 * `arrows`
 
-##### `sequence`
+#### `options.sequence`
 
 Type: `string` or `array`  
 
 Custom animation sequence. This value will override `preset`.
 
-##### `delay`
+##### `options.delay`
 
 Type: `number` _(milliseconds)_  
 Default: `125`  
 
 Delay for the render to be triggered.
 
-##### `prefix`
+##### `options.prefix`
 
 Type: `string`  
 Default: empty string  
 
 String to be added to the begining of the output.
 
-##### `suffix`
+##### `options.suffix`
 
 Type: `string`  
 Default: empty string  
 
 String to be added to the end of the output.
 
-##### `moonwalk` ![moonwalker](http://tgnp.me/wp-content/uploads/2011/10/lunapic_132009218615037_5.gif)
+##### `options.moonwalk` ![moonwalker](http://tgnp.me/wp-content/uploads/2011/10/lunapic_132009218615037_5.gif)
 
 Type: `boolean`  
 Default: `false`  
@@ -66,15 +70,15 @@ Default: `false`
 Whether or not to moonwalk when the last step of the animation is reached.  
 This is specially useful for creating smooth animation loops.
 
-#### `idle.start()`
+#### `loadingIndicator.start()`
 
-Start idle animation.
+Start loading animation.
 
-#### `idle.stop()`
+#### `loadingIndicator.stop()`
 
-Stop idle animation.
+Stop loading animation.
 
-#### `idle.render()`
+#### `loadingIndicator.render()`
 
 Render animation to the stream.  
 This method is called internally so you don't need to manually call it.
