@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rafaelrinaldi/idle.js.git"
+    "url": "git+https://github.com/rafaelrinaldi/loading-indicator.git"
   },
   "keywords": [
     "cli",
@@ -26,9 +26,9 @@
   "author": "Rafael Rinaldi",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rafaelrinaldi/idle.js/issues"
+    "url": "https://github.com/rafaelrinaldi/loading-indicator/issues"
   },
-  "homepage": "https://github.com/rafaelrinaldi/idle.js#readme",
+  "homepage": "https://github.com/rafaelrinaldi/loading-indicator#readme",
   "dependencies": {
     "log-output": "^2.0.1",
     "object-assign": "^3.0.0"
