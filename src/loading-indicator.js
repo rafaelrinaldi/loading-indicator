@@ -1,28 +1,28 @@
 'use strict';
 
 var objectAssign = require('object-assign');
-var write = require('write.js');
+var output = require('./output');
 var presets = require('./presets');
 var defaults = require('./defaults');
 
-function Idle(options) {
+function LoadingIndicator(options) {
   this.options = objectAssign(defaults, options || {});
   this.sequence = this.options.sequence || presets[this.options.preset];
 }
 
-Idle.prototype.start = function() {
+LoadingIndicator.prototype.start = function() {
   this.stop();
   this.interval = setInterval(this.render.bind(this), this.options.delay);
 };
 
-Idle.prototype.stop = function() {
+LoadingIndicator.prototype.stop = function() {
   this.index = 0;
   this.isMoonwalking = false;
 
   clearInterval(this.interval);
 };
 
-Idle.prototype.render = function() {
+LoadingIndicator.prototype.render = function() {
   var output = this.options.prefix + this.sequence[this.index] + this.options.suffix;
 
   write(output);
@@ -30,7 +30,7 @@ Idle.prototype.render = function() {
   this._updateIndex();
 };
 
-Idle.prototype._updateIndex = function() {
+LoadingIndicator.prototype._updateIndex = function() {
   var hasFinishedSequence = this.index === this.sequence.length - 1;
   var hasStartedSequence = this.index === 0;
   var shouldMoonwalk = this.options.moonwalk;
@@ -52,13 +52,13 @@ Idle.prototype._updateIndex = function() {
   }
 };
 
-Idle.prototype._previous = function() {
+LoadingIndicator.prototype._previous = function() {
   if(this.index > 0) {
     this.index--;
   }
 };
 
-Idle.prototype._next = function() {
+LoadingIndicator.prototype._next = function() {
   if(this.index < this.sequence.length - 1) {
     this.index++;
   } else {
@@ -66,4 +66,4 @@ Idle.prototype._next = function() {
   }
 };
 
-module.exports = Idle;
+module.exports = LoadingIndicator;
