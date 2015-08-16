@@ -1,4 +1,4 @@
-# loading-indicator
+# loading-indicator [![Build Status](https://travis-ci.org/rafaelrinaldi/loading-indicator.svg?branch=master)](https://travis-ci.org/rafaelrinaldi/loading-indicator)
 
 > Simple and customizable command line loading indicator.
 
