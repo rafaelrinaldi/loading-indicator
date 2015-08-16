@@ -23,9 +23,9 @@ LoadingIndicator.prototype.stop = function() {
 };
 
 LoadingIndicator.prototype.render = function() {
-  var output = this.options.prefix + this.sequence[this.index] + this.options.suffix;
+  var message = this.options.prefix + this.sequence[this.index] + this.options.suffix;
 
-  write(output);
+  output(message);
 
   this._updateIndex();
 };
