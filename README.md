@@ -10,6 +10,13 @@ $ npm install loading-indicator --save
 
 ## Usage
 
+```javascript
+var LoadingIndicator = require('loading-indicator');
+var spin = new LoadingIndicator();
+
+spin.start();
+```
+
 ## API
 
 ### `new LoadingIndicator([options])`
