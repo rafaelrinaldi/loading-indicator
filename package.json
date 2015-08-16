@@ -17,6 +17,8 @@
     "spin",
     "spinner",
     "loading",
+    "indicator",
+    "progress",
     "wait",
     "ui",
     "idle"
@@ -28,7 +30,7 @@
   },
   "homepage": "https://github.com/rafaelrinaldi/idle.js#readme",
   "dependencies": {
-    "object-assign": "^3.0.0",
-    "write.js": "^1.0.2"
+    "log-output": "^2.0.1",
+    "object-assign": "^3.0.0"
   }
 }
