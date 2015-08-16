@@ -30,7 +30,9 @@
   },
   "homepage": "https://github.com/rafaelrinaldi/loading-indicator#readme",
   "dependencies": {
+    "is-phantom": "^1.0.1",
     "log-output": "^2.0.1",
+    "log-output-phantom": "^1.0.0",
     "object-assign": "^3.0.0"
   }
 }
