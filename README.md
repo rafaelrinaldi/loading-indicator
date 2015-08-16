@@ -69,14 +69,6 @@ Default: empty string
 
 String to be added to the end of the output.
 
-##### `options.moonwalk` ![moonwalker](http://tgnp.me/wp-content/uploads/2011/10/lunapic_132009218615037_5.gif)
-
-Type: `boolean`  
-Default: `false`  
-
-Whether or not to moonwalk when the last step of the animation is reached.  
-This is specially useful for creating smooth animation loops.
-
 #### `loadingIndicator.start()`
 
 Start loading animation.
