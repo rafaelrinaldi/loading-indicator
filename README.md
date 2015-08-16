@@ -2,8 +2,6 @@
 
 > Simple and customizable command line loading indicator.
 
-<sup>Works also on [PhantomJS](http://phantomjs.org) enviroment.</sup>
-
 ## Install
 
 ```sh
