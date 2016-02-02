@@ -7,6 +7,9 @@
     "lint": "xo",
     "test": "xo && ava"
   },
+  "xo": {
+    "space": true
+  },
   "engines": {
     "node": ">=0.10.0"
   },
