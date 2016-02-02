@@ -18,7 +18,7 @@ function start(text, options) {
   var frame = 0;
 
   return setInterval(function () {
-    render(frames[frame = ++frame % frames.length] + (text || ''));
+    render(frames[frame = ++frame % frames.length] + (text ? (' ' + text) : ''));
   }, delay || 100);
 }
 
