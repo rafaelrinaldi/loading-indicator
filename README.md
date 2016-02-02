@@ -52,7 +52,7 @@ const timer = loading.start('Loading...');
 
 ## API
 
-## `fn.start([text], [options])`
+## `loading.start([text], [options])`
 
 Returns a `number` with the id that is used to reset the render interval (later referenced as _timer_).
 
@@ -91,7 +91,7 @@ Available presets are:
 * `bullets`
 * `arrows`
 
-## `fn.stop(timer, [shouldKeepOutput])`
+## `loading.stop(timer, [shouldKeepOutput])`
 
 ### `timer`
 
