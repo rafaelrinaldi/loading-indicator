@@ -71,7 +71,7 @@ Available options.
 
 #### `options.delay`
 
-Type: `number` _(milliseconds)_
+Type: `number` _(milliseconds)_  
 Default: `100`  
 
 Delay for the render to be triggered.
@@ -79,7 +79,7 @@ Delay for the render to be triggered.
 #### `options.frames`
 
 Type: `array`  
-Default: `presets.spinner`  
+Default: [`presets.spinner`](./presets.js#L2)  
 
 Frames for the loading animation sequence.
 
@@ -105,7 +105,7 @@ Id of the render function interval.
 Type: `boolean`  
 Default: `false`  
 
-Wether or not to keep the output when `fn.stop()` is called.
+Whether or not to keep the output when `fn.stop()` is called.
 
 ## License
 
