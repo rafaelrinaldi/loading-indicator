@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "xo",
-    "test": "node test.js"
+    "test": "xo && ava"
   },
   "engines": {
     "node": ">=4"
@@ -38,6 +38,7 @@
     "object-assign": "^4.0.1"
   },
   "devDependencies": {
+    "ava": "*",
     "xo": "*"
   }
 }
