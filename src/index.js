@@ -14,7 +14,7 @@ function stop(timer, shouldKeepOutput) {
 function start(text, options) {
   var delay = options && options.delay ? options.delay : 100;
   var frames = options && options.frames ? options.frames : presets.sticks;
-  var render = options && options.render? options.render : logUpdate;
+  var render = options && options.render ? options.render : logUpdate;
   var frame = 0;
 
   return setInterval(function () {
