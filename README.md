@@ -1,6 +1,6 @@
-# loading-indicator [![Build Status](https://travis-ci.org/rafaelrinaldi/loading-indicator.svg?branch=master)](https://travis-ci.org/rafaelrinaldi/loading-indicator)
+# loading-indicator
 
-> Simple and customizable command line loading indicator.
+> Simple and customizable command line loading indicator
 
 ## Install
 
@@ -14,7 +14,16 @@ $ npm install loading-indicator --save
 
 ## API
 
-### `new LoadingIndicator([options])`
+## `fn.start([text], [options])`
+
+Returns a `number` with the id that is used to reset the render interval (later referenced as _timer_).
+
+### `text`
+
+Type: `string`  
+Default: `null`  
+
+Text do append to the indicator symbol.
 
 ### `options`
 
@@ -22,61 +31,44 @@ Type: `object`
 
 Available options.
 
-#### `options.preset`
+#### `options.delay`
 
-Type: `string`  
-Default: `sticks`  
+Type: `number` _(milliseconds)_
+Default: `100`  
 
-The visual preset you want.
+Delay for the render to be triggered.
 
-Available values are:
+#### `options.frames`
 
-* `sticks`
+Type: `array`  
+Default: `presets.spinner`  
+
+Frames for the loading animation sequence.
+
+Available presets are:
+
+* `spinner` (default)
 * `circle`
 * `dots`
 * `bullets`
 * `arrows`
 
-#### `options.sequence`
+## `fn.stop(timer, [shouldKeepOutput])`
 
-Type: `string` or `array`  
+### `timer`
 
-Custom animation sequence. This value will override `preset`.
+_Required_  
+Type: `number` _(integer)_
 
-##### `options.delay`
+Id of the render function interval.
 
-Type: `number` _(milliseconds)_  
-Default: `125`  
+### `shouldKeepOutput`
 
-Delay for the render to be triggered.
+Type: `boolean`  
+Default: `false`  
 
-##### `options.prefix`
-
-Type: `string`  
-Default: empty string  
-
-String to be added to the begining of the output.
-
-##### `options.suffix`
-
-Type: `string`  
-Default: empty string  
-
-String to be added to the end of the output.
-
-#### `loadingIndicator.start()`
-
-Start loading animation.
-
-#### `loadingIndicator.stop()`
-
-Stop loading animation.
-
-#### `loadingIndicator.render()`
-
-Render animation to the stream.  
-This method is called internally so you don't need to manually call it.
+Wether or not to keep the output when `fn.stop()` is called.
 
 ## License
 
-MIT © [Rafael Rinaldi](http://rinaldi.io)
+MIT :copyright: [Rafael Rinaldi](http://rinaldi.io)
