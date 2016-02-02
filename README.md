@@ -3,7 +3,7 @@
 > Simple and customizable command line loading indicator
 
 ## Install
-
+**Warning: `v2.0.0` is a complete rewrite of the previous implementation.**
 ```sh
 $ npm install loading-indicator --save
 ```
