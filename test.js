@@ -7,7 +7,7 @@
 import Stream from 'stream';
 import logUpdate from 'log-update';
 import test from 'ava';
-import spinner from './';
+import loading from './';
 
 /**
  * Note that we share the same stream instance, that's why tests must run
@@ -29,8 +29,8 @@ const stream = new Stream.Duplex({
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-const createSpinner = stream => {
-  return spinner.start('loading', {
+const createLoadingIndicator = stream => {
+  return loading.start('loading', {
     render: logUpdate.create(stream)
   });
 };
@@ -48,10 +48,10 @@ test('test for valid output', async t => {
    * to our dummy stream.
    **/
 
-  const timer = createSpinner(stream);
+  const timer = createLoadingIndicator(stream);
 
   await delay(1000);
-  spinner.stop(timer);
+  loading.stop(timer);
 
   t.not(output[0].toString(), output[1].toString());
   t.not(output[1].toString(), output[2].toString());
@@ -59,17 +59,17 @@ test('test for valid output', async t => {
 });
 
 test('test if timeout is properly disposed', t => {
-  const timer = createSpinner(stream);
+  const timer = createLoadingIndicator(stream);
 
-  spinner.stop(timer);
+  loading.stop(timer);
   t.not(timer['0']);
 });
 
 test('test if custom text is properly added', async t => {
-  const timer = createSpinner(stream);
+  const timer = createLoadingIndicator(stream);
 
   await delay(1000);
-  spinner.stop(timer);
+  loading.stop(timer);
 
   const text = output[0].toString().slice(2).trim();
   t.is(text, 'loading');
