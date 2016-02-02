@@ -1,4 +1,4 @@
-# loading-indicator
+# loading-indicator [![Build Status](https://semaphoreci.com/api/v1/projects/aa124d8d-865f-4a05-ac30-1b47c246ddbe/681927/badge.svg)](https://semaphoreci.com/rafaelrinaldi/loading-indicator)
 
 > Simple and customizable command line loading indicator
 
