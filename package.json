@@ -16,15 +16,15 @@
   "keywords": [
     "cli",
     "command",
+    "idle",
+    "indicator",
     "line",
+    "loading",
+    "progress",
     "spin",
     "spinner",
-    "loading",
-    "indicator",
-    "progress",
-    "wait",
     "ui",
-    "idle"
+    "wait"
   ],
   "author": "Rafael Rinaldi",
   "license": "MIT",
