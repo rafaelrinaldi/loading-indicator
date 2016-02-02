@@ -105,7 +105,7 @@ Id of the render function interval.
 Type: `boolean`  
 Default: `false`  
 
-Whether or not to keep the output when `fn.stop()` is called.
+Whether or not to keep the output when `loading.stop()` is called.
 
 ## License
 
