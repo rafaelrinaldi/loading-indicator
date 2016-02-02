@@ -7,7 +7,7 @@
 import Stream from 'stream';
 import logUpdate from 'log-update';
 import test from 'ava';
-import spinner from './src';
+import spinner from './';
 
 /**
  * Note that we share the same stream instance, that's why tests must run
