@@ -1,33 +1,34 @@
 'use strict';
 
-var objectAssign = require('object-assign');
-var output = require('log-output');
+var logUpdate = require('log-update');
 var presets = require('./presets');
-var defaults = require('./defaults');
 
-function LoadingIndicator(options) {
-  this.options = objectAssign(defaults, options || {});
-  this.sequence = this.options.sequence || presets[this.options.preset];
-  this.index = 0;
+var frames = presets.spinner;
+var frame = 0;
+var interval;
+
+function stop(shouldKeepOutput) {
+  if (!shouldKeepOutput) {
+    logUpdate.clear();
+  }
+
+  clearInterval(interval);
 }
 
-LoadingIndicator.prototype.start = function() {
-  this.interval = setInterval(this.render.bind(this), this.options.delay);
+function start(text, options) {
+  stop();
+
+  return setInterval(function() {
+    logUpdate(frames[frame = ++frame % frames.length] + (text || ''));
+  }, options.delay || 100);
+}
+
+function use(preset) {
+  frames = typeof preset === 'string' ? presets[preset] : preset;
+}
+
+module.exports = {
+  start: start,
+  stop: stop,
+  use: use
 };
-
-LoadingIndicator.prototype.stop = function() {
-  this.index = 0;
-
-  output.done();
-
-  clearInterval(this.interval);
-};
-
-LoadingIndicator.prototype.render = function() {
-  var frame = this.sequence[this.index++ % this.sequence.length];
-  var message = this.options.prefix + frame + this.options.suffix;
-
-  output(message);
-};
-
-module.exports = LoadingIndicator;
