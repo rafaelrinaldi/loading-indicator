@@ -4,24 +4,42 @@
  * from each other, which means the loading animation is working properly.
  **/
 
-import {Writable} from 'stream';
+import Stream from 'stream';
 import logUpdate from 'log-update';
 import test from 'ava';
 import spinner from './src';
 
 /**
- * Setup dummy writable stream.
+ * Note that we share the same stream instance, that's why tests must run
+ * serially, otherwise output data will get messed up.
  **/
 
 let output = [];
-let stream = new Writable();
-stream.write = chunk => output.push(chunk);
+
+const stream = new Stream.Duplex({
+  write(chunk, encoding, next) {
+    output.push(chunk);
+    next();
+  }
+});
+
+/**
+ * Little helper to hang the test for a given period of time through Promises.
+ **/
+
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const createSpinner = stream => {
-  return spinner.start(null, {
+  return spinner.start('loading', {
     render: logUpdate.create(stream)
   });
 };
+
+/**
+ * Reset dummy stream output data at each run.
+ **/
+
+test.beforeEach(() => output.length = 0);
 
 test('test for valid output', async t => {
   /**
@@ -32,20 +50,27 @@ test('test for valid output', async t => {
 
   const timer = createSpinner(stream);
 
-  await setTimeout(() => {
-    spinner.stop(timer);
+  await delay(1000);
+  spinner.stop(timer);
 
-    t.not(output[0], output[1]);
-    t.not(output[2], output[3]);
-    t.not(output[4], output[5]);
-  }, 1000);
+  t.not(output[0].toString(), output[1].toString());
+  t.not(output[1].toString(), output[2].toString());
+  t.not(output[2].toString(), output[3].toString());
 });
 
-test('test if timeout is properly disposed', async t => {
+test('test if timeout is properly disposed', t => {
   const timer = createSpinner(stream);
 
-  await setTimeout(() => {
-    spinner.stop(timer);
-    t.not(timer['0']);
-  });
+  spinner.stop(timer);
+  t.not(timer['0']);
+});
+
+test('test if custom text is properly added', async t => {
+  const timer = createSpinner(stream);
+
+  await delay(1000);
+  spinner.stop(timer);
+
+  const text = output[0].toString().slice(2).trim();
+  t.is(text, 'loading');
 });
