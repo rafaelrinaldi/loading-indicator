@@ -2,7 +2,7 @@
 
 module.exports = {
   preset: 'sticks',
-  delay: 125,
+  delay: 100,
   prefix: '',
   suffix: ''
 };
