@@ -1,34 +1,29 @@
 'use strict';
 
 var logUpdate = require('log-update');
+
+// FIXME: Should be a separate module
 var presets = require('./presets');
 
-var frames = presets.spinner;
-var frame = 0;
-var interval;
-
-function stop(shouldKeepOutput) {
+function stop(timer, shouldKeepOutput) {
   if (!shouldKeepOutput) {
     logUpdate.clear();
   }
 
-  clearInterval(interval);
+  clearInterval(timer);
 }
 
 function start(text, options) {
-  stop();
+  var delay = options && options.delay ? options.delay : 100;
+  var frames = options && options.frames ? options.frames : presets.sticks;
+  var frame = 0;
 
-  return setInterval(function() {
+  return setInterval(function () {
     logUpdate(frames[frame = ++frame % frames.length] + (text || ''));
-  }, options.delay || 100);
-}
-
-function use(preset) {
-  frames = typeof preset === 'string' ? presets[preset] : preset;
+  }, delay || 100);
 }
 
 module.exports = {
   start: start,
-  stop: stop,
-  use: use
+  stop: stop
 };

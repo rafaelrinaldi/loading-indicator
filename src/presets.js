@@ -1,16 +1,16 @@
 'use strict';
 
 module.exports = {
-  'sticks': '|/-\\',
-  'circle': '◐◓◑◒',
-  'dots': '⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏',
-  'bullets': [
+  sticks: '|/-\\',
+  circle: '◐◓◑◒',
+  dots: '⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏',
+  bullets: [
     '◎ ◎ ◎',
     '◉ ◎ ◎',
     '◉ ◉ ◎',
     '◉ ◉ ◉'
   ],
-  'arrows': [
+  arrows: [
     '▹▹▹▹▹',
     '▸▹▹▹▹',
     '▸▸▹▹▹',
@@ -18,7 +18,7 @@ module.exports = {
     '▸▸▸▸▹',
     '▸▸▸▸▸'
   ],
-  'clock': [
+  clock: [
     '\uD83D\uDD50',
     '\uD83D\uDD51',
     '\uD83D\uDD52',
