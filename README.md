@@ -85,11 +85,12 @@ Frames for the loading animation sequence.
 
 Available presets are:
 
-* `spinner` (default)
-* `circle`
-* `dots`
-* `bullets`
-* `arrows`
+* [`spinner`](./presets.js#L2) (default)
+* [`circle`](./presets.js#3)
+* [`dots`](./presets.js#4)
+* [`bullets`](./presets.js#5)
+* [`arrows`](./presets.js#11)
+* [`clock`](./presets.js#19)
 
 ## `loading.stop(timer, [shouldKeepOutput])`
 
