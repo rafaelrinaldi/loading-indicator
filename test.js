@@ -1,11 +1,9 @@
 'use strict';
 
-var LoadingIndicator = require('./');
-var spin = new LoadingIndicator();
+const spinner = require('./src');
+const timer = spinner.start();
 
-spin.start();
-
-setTimeout(function() {
-  spin.stop();
-  process.exit();
+setTimeout(() => {
+  console.log('should stop');
+  spinner.stop(timer);
 }, 3500);
