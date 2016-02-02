@@ -37,9 +37,7 @@
   },
   "homepage": "https://github.com/rafaelrinaldi/loading-indicator#readme",
   "dependencies": {
-    "log-output": "^2.0.1",
-    "log-update": "^1.0.2",
-    "object-assign": "^4.0.1"
+    "log-update": "^1.0.2"
   },
   "devDependencies": {
     "ava": "*",
