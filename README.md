@@ -91,6 +91,7 @@ Available presets are:
 * [`bullets`](./presets.js#5)
 * [`arrows`](./presets.js#11)
 * [`clock`](./presets.js#19)
+* [`daynight`](./presets.js#32)
 
 ## `loading.stop(timer, [shouldKeepOutput])`
 
